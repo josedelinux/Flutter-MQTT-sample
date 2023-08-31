@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mqtt_sample/MqttHandler.dart';
+import 'package:flutter_mqtt_sample/mqtt_handler.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: MyStatefulWidget(),
     );
   }
@@ -37,7 +37,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sample Code'),
+        title: const Text('MQTT Sample Code'),
       ),
       body: Center(
         child: Column(
@@ -50,8 +50,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text('$value',
-                        style: TextStyle(
+                    Text(value,
+                        style: const TextStyle(
                             color: Colors.deepPurpleAccent, fontSize: 35))
                   ],
                 );

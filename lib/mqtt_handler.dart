@@ -7,8 +7,8 @@ class MqttHandler with ChangeNotifier {
   late MqttServerClient client;
 
   Future<Object> connect() async {
-    client = MqttServerClient.withPort(
-        'broker.emqx.io', 'lens_ALGxRhLLfeAVFZU2iMgNfBTyNUS232332323', 1883);
+    client = MqttServerClient.withPort('test.mosquitto.org',
+        'lens_ALGxRhLLfeAVFZU2iMgNfBTyNUS323testhp', 1883);
     client.logging(on: true);
     client.onConnected = onConnected;
     client.onDisconnected = onDisconnected;
@@ -17,7 +17,6 @@ class MqttHandler with ChangeNotifier {
     client.onSubscribeFail = onSubscribeFail;
     client.pongCallback = pong;
     client.keepAlivePeriod = 60;
-    client.logging(on: true);
 
     /// Set the correct MQTT protocol for mosquito
     client.setProtocolV311();
