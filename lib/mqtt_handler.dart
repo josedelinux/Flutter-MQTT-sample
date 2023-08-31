@@ -27,26 +27,26 @@ class MqttHandler with ChangeNotifier {
         .startClean()
         .withWillQos(MqttQos.atLeastOnce);
 
-    print('MQTT_LOGS::Mosquitto client connecting....');
+    debugPrint('MQTT_LOGS::Mosquitto client connecting....');
 
     client.connectionMessage = connMessage;
     try {
       await client.connect();
     } catch (e) {
-      print('Exception: $e');
+      debugPrint('Exception: $e');
       client.disconnect();
     }
 
     if (client.connectionStatus!.state == MqttConnectionState.connected) {
-      print('MQTT_LOGS::Mosquitto client connected');
+      debugPrint('MQTT_LOGS::Mosquitto client connected');
     } else {
-      print(
+      debugPrint(
           'MQTT_LOGS::ERROR Mosquitto client connection failed - disconnecting, status is ${client.connectionStatus}');
       client.disconnect();
       return -1;
     }
 
-    print('MQTT_LOGS::Subscribing to the test/lol topic');
+    debugPrint('MQTT_LOGS::Subscribing to the test/lol topic');
     const topic = 'test/sample';
     client.subscribe(topic, MqttQos.atMostOnce);
 
@@ -57,36 +57,36 @@ class MqttHandler with ChangeNotifier {
 
       data.value = pt;
       notifyListeners();
-      print(
+      debugPrint(
           'MQTT_LOGS:: New data arrived: topic is <${c[0].topic}>, payload is $pt');
-      print('');
+      debugPrint('');
     });
 
     return client;
   }
 
   void onConnected() {
-    print('MQTT_LOGS:: Connected');
+    debugPrint('MQTT_LOGS:: Connected');
   }
 
   void onDisconnected() {
-    print('MQTT_LOGS:: Disconnected');
+    debugPrint('MQTT_LOGS:: Disconnected');
   }
 
   void onSubscribed(String topic) {
-    print('MQTT_LOGS:: Subscribed topic: $topic');
+    debugPrint('MQTT_LOGS:: Subscribed topic: $topic');
   }
 
   void onSubscribeFail(String topic) {
-    print('MQTT_LOGS:: Failed to subscribe $topic');
+    debugPrint('MQTT_LOGS:: Failed to subscribe $topic');
   }
 
   void onUnsubscribed(String? topic) {
-    print('MQTT_LOGS:: Unsubscribed topic: $topic');
+    debugPrint('MQTT_LOGS:: Unsubscribed topic: $topic');
   }
 
   void pong() {
-    print('MQTT_LOGS:: Ping response client callback invoked');
+    debugPrint('MQTT_LOGS:: Ping response client callback invoked');
   }
 
   void publishMessage(String message) {
