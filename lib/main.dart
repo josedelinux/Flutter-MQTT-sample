@@ -27,6 +27,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _count = 0;
   MqttHandler mqttHandler = MqttHandler();
 
+  void _incrementCounterAndSend() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _count++;
+      mqttHandler.publishMessage(_count.toString());
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -57,12 +69,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 );
               },
               valueListenable: mqttHandler.data,
-            )
+            ),
+            const Text('Data to send:',
+                style: TextStyle(color: Colors.black, fontSize: 25)),
+            Text('$_count',
+                style: const TextStyle(color: Colors.black, fontSize: 25)),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() => _count++),
+        onPressed: _incrementCounterAndSend,
         tooltip: 'Increment Counter',
         child: const Icon(Icons.add),
       ),
